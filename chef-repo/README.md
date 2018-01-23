@@ -1,31 +1,50 @@
-The chef-repo
-===============
-All installations require a central workspace known as the chef-repo. This is a place where primitive objects--cookbooks, roles, environments, data bags, and chef-repo configuration files--are stored and managed.
+This configuration is used to setup a "vagrant home labs network".  Your workstation will then be able to upload cookbooks to the chef server.
+You will then be able to deploy those cookbooks to the nodes.
 
-The chef-repo should be kept under version control, such as [git](http://git-scm.org), and then managed as if it were source code.
+# Pre-requisites:
+================
 
-Knife Configuration
--------------------
-Knife is the [command line interface](https://docs.chef.io/knife.html) for Chef. The chef-repo contains a .chef directory (which is a hidden directory by default) in which the Knife configuration file (knife.rb) is located. This file contains configuration settings for the chef-repo.
+* virtualbox already installed (https://www.virtualbox.org/wiki/Downloads)
+* vagrant installed (https://www.vagrantup.com/downloads.html)
 
-The knife.rb file is automatically created by the starter kit. This file can be customized to support configuration settings used by [cloud provider options](https://docs.chef.io/plugin_knife.html) and custom [knife plugins](https://docs.chef.io/plugin_knife_custom.html).
+Once this repository has been cloned, startup the chef server with:
 
-Also located inside the .chef directory are .pem files, which contain private keys used to authenticate requests made to the Chef server. The USERNAME.pem file contains a private key unique to the user (and should never be shared with anyone). The ORGANIZATION-validator.pem file contains a private key that is global to the entire organization (and is used by all nodes and workstations that send requests to the Chef server).
+# vagrant up chef-server
 
-More information about knife.rb configuration options can be found in [the documentation for knife](https://docs.chef.io/config_rb_knife.html).
+Now you will need the private key for communication between your workstation and the chef server.  Download the private key from the chef
+server with: (using the default password for vagrant)
 
-Cookbooks
----------
-A cookbook is the fundamental unit of configuration and policy distribution. A sample cookbook can be found in `cookbooks/starter`. After making changes to any cookbook, you must upload it to the Chef server using knife:
+# scp -P 2222 127.0.0.1:~/admin.pem chef-repo/.chef/ 
+# cd chef-repo
+# knife ssl check
+# knife ssl fetch
 
-    $ knife upload cookbooks/starter
+The knife ssl fetch command will go out and download the SSL certificate from chef-server.  You will now be able to communicate with the chef
+server using your workstation.  
 
-For more information about cookbooks, see the example files in the `starter` cookbook.
+This can be validated with:
+# knife ssl check
 
-Roles
------
-Roles provide logical grouping of cookbooks and other roles. A sample role can be found at `roles/starter.rb`.
+You should get something back like:
 
-Getting Started
--------------------------
-Now that you have the chef-repo ready to go, check out [Learn Chef](https://learn.chef.io/) to proceed with your workstation setup. If you have any questions about Chef you can always ask [our support team](https://www.chef.io/support/) for a helping hand.
+Connecting to host chef-server.test:443
+Successfully verified certificates from `chef-server.test'
+
+# Start chef node(s)
+===================
+
+Next startup a node(s) with:
+
+# vagrant up node1-ubuntu
+
+This will bring the node online, and bootstrap it with chef.  
+
+
+END
+
+This concludes the vagrant home lab setup.  Now that you have a chef server and some nodes, you can test out deploying cookbooks to your nodes
+after you upload them to your chef server.
+
+
+
+
