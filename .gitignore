@@ -11,3 +11,5 @@ Policyfile.lock.json
 .vagrant/
 .vagrant.d/
 
+secrets/
+
