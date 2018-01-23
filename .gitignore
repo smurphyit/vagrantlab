@@ -1,0 +1,12 @@
+# chef
+.chef/*.pem
+
+# Test kitchen
+.kitchen/
+
+# Vagrant
+.vagrant/
+
+# The pem file from a running vagrant chef-server
+secrets/*.pem
+
