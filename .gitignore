@@ -1,12 +1,13 @@
-# chef
+# chef stuff
 .chef/*.pem
+Berksfile.lock
+.kitchen
+.kitchen.local.yml
+vendor/
+.coverage/
+Policyfile.lock.json
 
-# Test kitchen
-.kitchen/
-
-# Vagrant
+# Vagrant stuff
 .vagrant/
-
-# The pem file from a running vagrant chef-server
-secrets/*.pem
+.vagrant.d/
 
