@@ -14,11 +14,11 @@ sudo timedatectl set-timezone America/Halifax
 dpkg --get-selections |grep chef-server-core
 if [[ "$?" -ne "0" ]]; then
    echo "Downloading the Chef server package..."
-     if [ ! -f /downloads/chef-server-core_12.17.5_amd64.deb ]; then
-       wget -nv -P /downloads https://packages.chef.io/files/stable/chef-server/12.17.5/ubuntu/16.04/chef-server-core_12.17.5-1_amd64.deb
+     if [ ! -f /downloads/chef-server-core_12.17.15_amd64.deb ]; then
+       wget -nv -P /downloads https://packages.chef.io/files/stable/chef-server/12.17.15/ubuntu/16.04/chef-server-core_12.17.15-1_amd64.deb
      fi
    echo "Installing Chef server..."
-   sudo dpkg -i /downloads/chef-server-core_12.17.5-1_amd64.deb
+   sudo dpkg -i /downloads/chef-server-core_12.17.15-1_amd64.deb
 fi
 
 # reconfigure and restart services
